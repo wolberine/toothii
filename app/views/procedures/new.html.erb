@@ -1,0 +1,46 @@
+<!-- Validation failure messages -->
+<% if @procedure.errors.any? %>
+  <% @procedure.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Add Procedure</h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/create_procedure" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for description -->
+      <div class="form-group">
+        <label for="description" class="control-label">
+          Description
+        </label>
+
+        <input type="text" id="description" name="description" placeholder="Description" class="form-control" value="<%= @procedure.description %>">
+      </div>
+
+      <!-- Label and input for code -->
+      <div class="form-group">
+        <label for="code" class="control-label">
+          Code
+        </label>
+
+        <input type="text" id="code" name="code" placeholder="Code" class="form-control" value="<%= @procedure.code %>">
+      </div>
+
+      <button class="btn btn-success">
+        Create Procedure
+      </button>
+      or
+      <a href="/procedures">Cancel</a>
+    </form>
+  </div>
+</div>

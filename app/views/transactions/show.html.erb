@@ -1,0 +1,40 @@
+<div class="page-header">
+  <h3>Transaction #<%= @transaction.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <dl class="dl-horizontal">
+      <dt>Procedure</dt>
+      <dd><%= @transaction.procedure_id %></dd>
+
+      <dt>Bill</dt>
+      <dd><%= @transaction.bill_id %></dd>
+
+      <dt>Deductible payment</dt>
+      <dd><%= @transaction.deductible_payment %></dd>
+
+      <dt>Insurance payment</dt>
+      <dd><%= @transaction.insurance_payment %></dd>
+
+      <dt>Patient payment</dt>
+      <dd><%= @transaction.patient_payment %></dd>
+
+      <dt>Date</dt>
+      <dd><%= @transaction.date %></dd>
+
+    </dl>
+
+    <div class="btn-group btn-group-justified">
+      <a href="/transactions" class="btn btn-primary">
+        Back
+      </a>
+      <a href="/transactions/<%= @transaction.id %>/edit" class="btn btn-warning">
+        Edit
+      </a>
+      <a href="/delete_transaction/<%= @transaction.id %>" class="btn btn-danger" rel="nofollow">
+        Delete
+      </a>
+    </div>
+  </div>
+</div>

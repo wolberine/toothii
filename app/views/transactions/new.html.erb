@@ -1,0 +1,82 @@
+<!-- Validation failure messages -->
+<% if @transaction.errors.any? %>
+  <% @transaction.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Add Transaction</h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/create_transaction" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for procedure_id -->
+      <div class="form-group">
+        <label for="procedure_id" class="control-label">
+          Procedure
+        </label>
+
+        <input type="text" id="procedure_id" name="procedure_id" placeholder="Procedure" class="form-control" value="<%= @transaction.procedure_id %>">
+      </div>
+
+      <!-- Label and input for bill_id -->
+      <div class="form-group">
+        <label for="bill_id" class="control-label">
+          Bill
+        </label>
+
+        <input type="text" id="bill_id" name="bill_id" placeholder="Bill" class="form-control" value="<%= @transaction.bill_id %>">
+      </div>
+
+      <!-- Label and input for deductible_payment -->
+      <div class="form-group">
+        <label for="deductible_payment" class="control-label">
+          Deductible payment
+        </label>
+
+        <input type="text" id="deductible_payment" name="deductible_payment" placeholder="Deductible payment" class="form-control" value="<%= @transaction.deductible_payment %>">
+      </div>
+
+      <!-- Label and input for insurance_payment -->
+      <div class="form-group">
+        <label for="insurance_payment" class="control-label">
+          Insurance payment
+        </label>
+
+        <input type="text" id="insurance_payment" name="insurance_payment" placeholder="Insurance payment" class="form-control" value="<%= @transaction.insurance_payment %>">
+      </div>
+
+      <!-- Label and input for patient_payment -->
+      <div class="form-group">
+        <label for="patient_payment" class="control-label">
+          Patient payment
+        </label>
+
+        <input type="text" id="patient_payment" name="patient_payment" placeholder="Patient payment" class="form-control" value="<%= @transaction.patient_payment %>">
+      </div>
+
+      <!-- Label and input for date -->
+      <div class="form-group">
+        <label for="date" class="control-label">
+          Date
+        </label>
+
+        <input type="text" id="date" name="date" placeholder="Date" class="form-control" value="<%= @transaction.date %>">
+      </div>
+
+      <button class="btn btn-success">
+        Create Transaction
+      </button>
+      or
+      <a href="/transactions">Cancel</a>
+    </form>
+  </div>
+</div>

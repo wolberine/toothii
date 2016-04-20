@@ -1,0 +1,34 @@
+<div class="page-header">
+  <h1>
+    Patients
+    <a href="/patients/new" class="btn btn-lg btn-success">New Patient</a>
+  </h1>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-striped table-hover">
+      <tr>
+        <th>Deductible limit</th>
+        <th>Phone number</th>
+        <th>Address</th>
+        <th>Name</th>
+        <th>Actions</th>
+      </tr>
+
+      <% @patients.each do |patient| %>
+      <tr>
+        <td><%= patient.deductible_limit %></td>
+        <td><%= patient.phone_number %></td>
+        <td><%= patient.address %></td>
+        <td><%= patient.name %></td>
+        <td>
+          <a href="/patients/<%= patient.id %>" class="btn btn-primary">Show</a>
+          <a href="/patients/<%= patient.id %>/edit" class="btn btn-warning">Edit</a>
+          <a href="/delete_patient/<%= patient.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
