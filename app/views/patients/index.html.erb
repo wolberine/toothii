@@ -1,3 +1,4 @@
+<%= javascript_include_tag "https://www.google.com/jsapi", "chartkick" %>
 <div class="page-header">
   <h1>
     Patients
@@ -30,5 +31,12 @@
       </tr>
       <% end %>
     </table>
+    Test of Chartkick Gem
+<%= timeline [
+  ["Cleaning", "1789-04-29", "1797-03-03"],
+  ["Cavity", "1797-03-03", "1801-03-03"],
+  ["Crown", "1801-03-03", "1809-03-03"]
+] %>
+
   </div>
 </div>
