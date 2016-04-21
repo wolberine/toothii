@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   # Routes for the Procedure resource:
+
   # CREATE
   get "/procedures/new", :controller => "procedures", :action => "new"
   post "/create_procedure", :controller => "procedures", :action => "create"

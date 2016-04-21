@@ -5,6 +5,44 @@ class BillsController < ApplicationController
 
   def show
     @bill = Bill.find(params[:id])
+    @transactions = Transaction.where({ :bill_id => params[:id] })
+
+    @total_insurance_payment = 0.to_f
+    @total_patient_payment = 0.to_f
+
+    @transactions.each do |t|
+      @total_insurance_payment = @total_insurance_payment + t.insurance_payment
+      @total_patient_payment = @total_patient_payment + t.patient_payment
+    end
+    @total_payment = 0.to_f 
+    @total_payment = @total_insurance_payment + @total_patient_payment
+
+    @bar_chart_data = [
+    {
+      name: "Insurance Payment", 
+      data: [["Payment Breakdown", @total_insurance_payment]]
+    },
+    {
+      name: "Patient Payment", 
+      data: [["Payment Breakdown", @total_patient_payment]]
+    }
+    ]
+    @timeline_chart_data = Hash.new
+    
+    bottom_layer = Array.new
+    previous_id = 0
+    @transactions.each do |t|
+      temp_hash = Hash.new
+      @timeline_chart_data[previous_id] = bottom_layer.reduce(0, :+)
+
+      @timeline_chart_data[t.procedure_id] = t.patient_payment
+      
+      bottom_layer.push(t.patient_payment)
+
+      previous_id = t.procedure_id
+
+    end
+
   end
 
   def new
