@@ -14,6 +14,7 @@ class ProceduresController < ApplicationController
   def create
     @procedure = Procedure.new
     @procedure.description = params[:description]
+    @procedure.long_description = params[:long_description]
     @procedure.code = params[:code]
 
     if @procedure.save
@@ -31,6 +32,7 @@ class ProceduresController < ApplicationController
     @procedure = Procedure.find(params[:id])
 
     @procedure.description = params[:description]
+    @procedure.long_description = params[:long_description]
     @procedure.code = params[:code]
 
     if @procedure.save

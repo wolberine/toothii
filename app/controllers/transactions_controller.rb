@@ -13,12 +13,14 @@ class TransactionsController < ApplicationController
 
   def create
     @transaction = Transaction.new
+    @transaction.patient_id = params[:patient_id]
     @transaction.procedure_id = params[:procedure_id]
     @transaction.bill_id = params[:bill_id]
     @transaction.deductible_payment = params[:deductible_payment]
     @transaction.insurance_payment = params[:insurance_payment]
     @transaction.patient_payment = params[:patient_payment]
-    @transaction.date = params[:date]
+    @transaction.date = DateTime.strptime(params[:date],"%m/%d/%Y")
+    @transaction.location = params[:location]
 
     if @transaction.save
       redirect_to "/transactions", :notice => "Transaction created successfully."
@@ -35,11 +37,13 @@ class TransactionsController < ApplicationController
     @transaction = Transaction.find(params[:id])
 
     @transaction.procedure_id = params[:procedure_id]
+    @transaction.patient_id = params[:patient_id]
     @transaction.bill_id = params[:bill_id]
     @transaction.deductible_payment = params[:deductible_payment]
     @transaction.insurance_payment = params[:insurance_payment]
     @transaction.patient_payment = params[:patient_payment]
-    @transaction.date = params[:date]
+    @transaction.date = DateTime.strptime(params[:date],"%m/%d/%Y")
+    @transaction.location = params[:location]
 
     if @transaction.save
       redirect_to "/transactions", :notice => "Transaction updated successfully."

@@ -27,6 +27,15 @@
         <input type="text" id="description" name="description" placeholder="Description" class="form-control" value="<%= @procedure.description %>">
       </div>
 
+      <!-- Label and input for long description -->
+      <div class="form-group">
+        <label for="long_description" class="control-label">
+          Long Description
+        </label>
+
+        <input type="text" id="long_description" name="long_description" placeholder="Long Description" class="form-control" value="<%= @procedure.long_description %>">
+      </div>
+
       <!-- Label and input for code -->
       <div class="form-group">
         <label for="code" class="control-label">

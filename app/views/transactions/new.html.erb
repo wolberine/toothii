@@ -18,22 +18,39 @@
       <!-- Hidden input for authenticity token to protect from forgery -->
       <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
 
+      <!-- Label and input for patient_id -->
+      <div class="form-group">
+        <label for="patient_id" class="control-label">
+         Patient Name
+        </label>
+      <%= select_tag(:patient_id, options_from_collection_for_select(Patient.all,:id,:name), :class=>"form-control", :include_blank=>true) %>
+      </div>
+
       <!-- Label and input for procedure_id -->
       <div class="form-group">
         <label for="procedure_id" class="control-label">
           Procedure
         </label>
 
-        <input type="text" id="procedure_id" name="procedure_id" placeholder="Procedure" class="form-control" value="<%= @transaction.procedure_id %>">
+          <%= select_tag(:procedure_id, options_from_collection_for_select(Procedure.all,:id,:description), :class=>"form-control", :include_blank=>true) %>
+      </div>
+
+      <!-- Label and input for Location -->
+      <div class="form-group">
+        <label for="location" class="control-label">
+          Location in Mouth
+        </label>
+
+        <input type="text" id="location" name="location" placeholder="Tooth Location" class="form-control" value="<%= @transaction.location %>">
       </div>
 
       <!-- Label and input for bill_id -->
       <div class="form-group">
         <label for="bill_id" class="control-label">
-          Bill
+          Patient Bill
         </label>
 
-        <input type="text" id="bill_id" name="bill_id" placeholder="Bill" class="form-control" value="<%= @transaction.bill_id %>">
+        <%= select_tag(:bill_id, options_from_collection_for_select(Bill.all,:id, :bill_name), :class=>"form-control", :include_blank=>true) %>
       </div>
 
       <!-- Label and input for deductible_payment -->
@@ -68,9 +85,18 @@
         <label for="date" class="control-label">
           Date
         </label>
-
-        <input type="text" id="date" name="date" placeholder="Date" class="form-control" value="<%= @transaction.date %>">
+          <div class='input-group date' id='datetimepicker1'>
+                    <input type='text' name="date" class="form-control" id="date" placeholder="Date" value="<%= @transaction.date %>" data-provide='datepicker'/>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
       </div>
+      <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker1').datetimepicker();
+            });
+        </script>
 
       <button class="btn btn-success">
         Create Transaction

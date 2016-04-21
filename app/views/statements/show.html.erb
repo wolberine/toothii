@@ -1,9 +1,12 @@
+<%= javascript_include_tag "https://www.google.com/jsapi", "chartkick" %>
+
 <div class="page-header">
   <h3>Bill #<%= @bill.id %></h3>
 </div>
 
 <div class="row">
   <div class="col-md-12">
+
     <dl class="dl-horizontal">
       <dt>Date</dt>
       <dd><%= @bill.date %></dd>
@@ -11,7 +14,40 @@
       <dt>Patient</dt>
       <dd><%= @bill.patient_id %></dd>
 
+      <dt>Transactions</dt>
+      <% @transactions.each do |t| %>
+        <dd><%= t.bill_id %></dd>
+        <dd><%= t.date %></dd>
+        <dd><%= t.patient_payment %></dd>
+        <dd><%= t.insurance_payment %></dd>
+        <dd><%= t.deductible_payment %></dd>
+        <dd><%= t.procedure_id %></dd>
+      <% end %>
+
+      <dt> Insurance Payment </dt>
+      <dd> <%= @total_insurance_payment %> </dd>
+
+      <dt> Patient Payment </dt>
+      <dd> <%= @total_patient_payment %> </dd>
+
+      <dt> Total Payment </dt>
+      <dd> <%= @total_payment %> </dd>
+
     </dl>
+    
+
+
+    <div class= "row">
+      <div class= "col-md-4">
+        <%= column_chart @bar_chart_data, stacked: true %>
+      </div>
+      <div class= "col-md-4">
+        <%= column_chart @timeline_chart_data, stacked: true %>
+      </div>
+    </div>
+
+
+
 
     <div class="btn-group btn-group-justified">
       <a href="/bills" class="btn btn-primary">
