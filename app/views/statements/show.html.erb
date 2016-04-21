@@ -1,0 +1,28 @@
+<div class="page-header">
+  <h3>Bill #<%= @bill.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <dl class="dl-horizontal">
+      <dt>Date</dt>
+      <dd><%= @bill.date %></dd>
+
+      <dt>Patient</dt>
+      <dd><%= @bill.patient_id %></dd>
+
+    </dl>
+
+    <div class="btn-group btn-group-justified">
+      <a href="/bills" class="btn btn-primary">
+        Back
+      </a>
+      <a href="/bills/<%= @bill.id %>/edit" class="btn btn-warning">
+        Edit
+      </a>
+      <a href="/delete_bill/<%= @bill.id %>" class="btn btn-danger" rel="nofollow">
+        Delete
+      </a>
+    </div>
+  </div>
+</div>

@@ -17,9 +17,9 @@ class PatientsController < ApplicationController
     @patient.phone_number = params[:phone_number]
     @patient.address = params[:address]
     @patient.name = params[:name]
-
+    @patient.benefit_max = params[:benefit_max]
     if @patient.save
-      redirect_to "/patients", :notice => "Patient created successfully."
+      redirect_to "/patients", :notice => "Patient #{@patient.id} created successfully."
     else
       render 'new'
     end
@@ -36,6 +36,7 @@ class PatientsController < ApplicationController
     @patient.phone_number = params[:phone_number]
     @patient.address = params[:address]
     @patient.name = params[:name]
+    @patient.benefit_max = params[:benefit_max]
 
     if @patient.save
       redirect_to "/patients", :notice => "Patient updated successfully."

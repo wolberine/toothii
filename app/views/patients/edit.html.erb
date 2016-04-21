@@ -54,6 +54,14 @@
         <input type="text" id="name" name="name" placeholder="Name" class="form-control" value="<%= @patient.name %>">
       </div>
 
+      <!-- Label and input for benefit_max -->
+      <div class="form-group">
+        <label for="benefit_max" class="control-label">
+          Benefit Max
+        </label>
+        <input type="text" id="benefit_max" name="benefit_max" placeholder="Benefit Max" class="form-control" value="<%= @patient.benefit_max %>">
+      </div>
+
       <button class="btn btn-warning">
         Update Patient
       </button>

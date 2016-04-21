@@ -66,6 +66,22 @@ Rails.application.routes.draw do
 
   # DELETE
   get "/delete_bill/:id", :controller => "bills", :action => "destroy"
+
+  # Routes for the Statement resource (derivative of bill):
+  # CREATE
+  get "/statements/new", :controller => "statements", :action => "new"
+  post "/create_statement", :controller => "statements", :action => "create"
+
+  # READ
+  get "/statements", :controller => "statements", :action => "index"
+  get "/statements/:id", :controller => "statements", :action => "show"
+
+  # UPDATE
+  get "/statements/:id/edit", :controller => "statements", :action => "edit"
+  post "/update_statement/:id", :controller => "statements", :action => "update"
+
+  # DELETE
+  get "/delete_statement/:id", :controller => "statements", :action => "destroy"
   #------------------------------
 
   # Routes for the Patient resource:

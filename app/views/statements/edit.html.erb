@@ -1,0 +1,46 @@
+<!-- Validation failure messages -->
+<% if @bill.errors.any? %>
+  <% @bill.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Edit Bill #<%= @bill.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/update_bill/<%= @bill.id %>" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for date -->
+      <div class="form-group">
+        <label for="date" class="control-label">
+          Date
+        </label>
+
+        <input type="text" id="date" name="date" placeholder="Date" class="form-control" value="<%= @bill.date %>">
+      </div>
+
+      <!-- Label and input for patient_id -->
+      <div class="form-group">
+        <label for="patient_id" class="control-label">
+          Patient
+        </label>
+
+        <input type="text" id="patient_id" name="patient_id" placeholder="Patient" class="form-control" value="<%= @bill.patient_id %>">
+      </div>
+
+      <button class="btn btn-warning">
+        Update Bill
+      </button>
+      or
+      <a href="/bills/<%= @bill.id %>">Cancel</a>
+    </form>
+  </div>
+</div>

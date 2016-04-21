@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160420014645) do
+ActiveRecord::Schema.define(version: 20160421014532) do
 
   create_table "bills", force: :cascade do |t|
     t.date     "date"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20160420014645) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "benefit_max"
   end
 
   create_table "procedures", force: :cascade do |t|
