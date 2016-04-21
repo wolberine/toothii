@@ -12,7 +12,7 @@
       <dd><%= @bill.date %></dd>
 
       <dt>Patient</dt>
-      <dd><%= @bill.patient_id %></dd>
+      <dd><%= Patient.find(@bill.patient_id).name %></dd>
 
       <dt>Transactions</dt>
       <% @transactions.each do |t| %>
