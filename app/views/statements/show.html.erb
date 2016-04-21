@@ -16,8 +16,8 @@
 
       <dt>Transactions</dt>
       <% @transactions.each do |t| %>
-        <dd><%= t.bill_id %></dd>
         <dd><%= t.date %></dd>
+        <dd><%= Procedure.find(t.procedure_id).description %></dd>
         <dd><%= t.patient_payment %></dd>
         <dd><%= t.insurance_payment %></dd>
         <dd><%= t.deductible_payment %></dd>
