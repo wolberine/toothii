@@ -14,16 +14,6 @@
       <dt>Patient</dt>
       <dd><%= @bill.patient_id %></dd>
 
-      <dt>Transactions</dt>
-      <% @transactions.each do |t| %>
-        <dd><%= t.bill_id %></dd>
-        <dd><%= t.date %></dd>
-        <dd><%= t.patient_payment %></dd>
-        <dd><%= t.insurance_payment %></dd>
-        <dd><%= t.deductible_payment %></dd>
-        <dd><%= t.procedure_id %></dd>
-      <% end %>
-
       <dt> Insurance Payment </dt>
       <dd> <%= @total_insurance_payment %> </dd>
 
@@ -39,10 +29,35 @@
 
     <div class= "row">
       <div class= "col-md-6">
-        <%= column_chart @bar_chart_data, stacked: true %>
+        <%= column_chart @bar_chart_data, stacked: true, library: {vAxis: {gridlines: {color: "transparent"}}} %>
       </div>
       <div class= "col-md-6">
-        <%= column_chart @waterfall_chart_data, stacked: true, colors: ["white","#0089d0"] %>
+        <%= column_chart @waterfall_chart_data, stacked: true, colors: ["white","#0089d0"], library: {vAxis: {gridlines: {color: "transparent"}}} %>
+      </div>
+    </div>
+
+
+
+
+    <div class= "row">
+      <div class= "col-md-6">
+        <div class="list-group">
+          <% @transactions.each do |t| %>
+          <div class="list-group-item">
+              <div class="row">
+                <div class="col-md-8">
+                  <h4 class="list-group-item-heading"><%= Procedure.find(t.procedure_id).description %></h4>
+                  <p class="list-group-item-text">Total Payment: <%= t.patient_payment + t.insurance_payment %></p>
+                  <h5 class="list-group-item-heading">What is it?</h4>
+                  <p class="list-group-item-text"><%= Procedure.find(t.procedure_id).long_description %></p>
+                </div>
+                <div class= "col-md-4">
+                  <%= column_chart [{ :name => "Patient", :data => [["You",t.patient_payment]] },{ :name => "Insurance", :data => [["Insurance",t.insurance_payment]] }], stacked: false, height: "100px", library: {vAxis: {gridlines: {color: "transparent"}}} %>
+                </div>
+              </div>
+          </div>
+          <% end %>
+        </div>
       </div>
     </div>
 

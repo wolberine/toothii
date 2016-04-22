@@ -30,6 +30,7 @@ class BillsController < ApplicationController
     
     counter = 0
     @waterfall_chart_data = Array.new
+    @procedure_chart_data = Array.new
     @transactions.each do |t| 
       white_hash = { :name => "", :data => [[t.date.to_s, counter]]}
       @waterfall_chart_data.push(white_hash)
@@ -37,6 +38,9 @@ class BillsController < ApplicationController
       temp_hash = { :name => t.id.to_s, :data => [[t.date.to_s,t.patient_payment]] }
       counter = counter + t.patient_payment
       @waterfall_chart_data.push(temp_hash)
+
+      @procedure_chart_data.push({ :name => "Patient", :data => [["You",t.patient_payment]] },{ :name => "Insurance", :data => [["Insurance",t.insurance_payment]] })
+
     end
 
 
