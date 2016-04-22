@@ -27,21 +27,18 @@ class BillsController < ApplicationController
       data: [["Payment Breakdown", @total_patient_payment]]
     }
     ]
-    @timeline_chart_data = Hash.new
     
-    bottom_layer = Array.new
-    previous_id = 0
-    @transactions.each do |t|
-      temp_hash = Hash.new
-      @timeline_chart_data[previous_id] = bottom_layer.reduce(0, :+)
-
-      @timeline_chart_data[t.procedure_id] = t.patient_payment
+    counter = 0
+    @waterfall_chart_data = Array.new
+    @transactions.each do |t| 
+      white_hash = { :name => "white", :data => [[t.date.to_s, counter]]}
+      @waterfall_chart_data.push(white_hash)
       
-      bottom_layer.push(t.patient_payment)
-
-      previous_id = t.procedure_id
-
+      temp_hash = { :name => t.id.to_s, :data => [[t.date.to_s,t.patient_payment]] }
+      counter = counter + t.patient_payment
+      @waterfall_chart_data.push(temp_hash)
     end
+
 
   end
 
