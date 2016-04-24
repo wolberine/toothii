@@ -1,29 +1,48 @@
 <%= javascript_include_tag "https://www.google.com/jsapi", "chartkick" %>
 
 <div class="page-header">
-  <h3>Bill #<%= @bill.id %></h3>
+  <div class="row">
+    <div class="col-md-4">
+      &nbsp;
+    </div>
+    <div class="col-md-4">
+      &nbsp;
+    </div>
+    <div class="col-md-2">
+      <strong>
+        <p class="text-left">
+          <%= @bill.date %>
+        </p>
+      </strong>
+    </div>
+    <div class="col-md-2">
+      <strong>
+        <p class="text-right">
+            <%= Patient.find(@bill.patient_id).name %>
+        </p>
+      </strong>
+    </div>
+  </div>
+  <div class="row">
+    <div class= "col-md-4">
+      <h4>Elements<br>Dental Studio</h4>
+    </div>
+    <div class= "col-md-4">
+      <h5>1605 Benson Ave. <br>Evanston, IL 60201</h5> 
+    </div>
+    <div class= "col-md-4">
+      <h3><span class="label label-default">Payment Due Today <%= number_to_currency(@total_patient_payment, :unit => "$") %></span></h3>
+    </div>
+  </div>
 </div>
 
 <div class="row">
   <div class="col-md-12">
-
-    <dl class="dl-horizontal">
-      <dt>Date</dt>
-      <dd><%= @bill.date %></dd>
-
-      <dt>Patient</dt>
-      <dd><%= @bill.patient_id %></dd>
-
-      <dt> Insurance Payment </dt>
-      <dd> <%= @total_insurance_payment %> </dd>
-
-      <dt> Patient Payment </dt>
-      <dd> <%= @total_patient_payment %> </dd>
-
-      <dt> Total Payment </dt>
-      <dd> <%= @total_payment %> </dd>
-
-    </dl>
+    <h5>
+      <strong><%= Patient.find(@bill.patient_id).name %></strong>,<br>
+      Thanks for choosing <strong> Elements Dental Studio </strong> as your dental care provider!<br>
+      Below is a summary of your charges today.
+    </h5>
     
 
 
