@@ -19,18 +19,20 @@ class BillsController < ApplicationController
 
     @bar_chart_data = [
     {
-      name: "Insurance Payment", 
-      data: [["Payment Breakdown", @total_insurance_payment]]
-    },
-    {
       name: "Patient Payment", 
       data: [["Payment Breakdown", @total_patient_payment]]
+
+
+    },
+    {
+      name: "Insurance Payment", 
+      data: [["Payment Breakdown", @total_insurance_payment]]
     }
     ]
     
     counter = 0
     @waterfall_chart_data = Array.new
-    @procedure_chart_data = Array.new
+    @procedure_chart_data = Array.new #this array is for the charge breakdown
     @transactions.each do |t| 
       white_hash = { :name => "", :data => [[t.date.to_s, counter]]}
       @waterfall_chart_data.push(white_hash)
@@ -39,6 +41,7 @@ class BillsController < ApplicationController
       counter = counter + t.patient_payment
       @waterfall_chart_data.push(temp_hash)
 
+      #this is for the charge breakdown
       @procedure_chart_data.push({ :name => "Patient", :data => [["You",t.patient_payment]] },{ :name => "Insurance", :data => [["Insurance",t.insurance_payment]] })
 
     end

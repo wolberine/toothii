@@ -29,30 +29,116 @@
 
     <div class= "row">
       <div class= "col-md-6">
-        <%= column_chart @bar_chart_data, stacked: true, library: {vAxis: {gridlines: {color: "transparent"}}} %>
+        <h4><span class="label label-default">Today's Charges</span></h4>
+        <%= column_chart @bar_chart_data, stacked: true, library: {vAxis: {gridlines: {color: "transparent"}},bar: {groupWidth: "25%"}} %>
       </div>
       <div class= "col-md-6">
-        <%= column_chart @waterfall_chart_data, stacked: true, colors: ["white","#0089d0"], library: {vAxis: {gridlines: {color: "transparent"}}} %>
+        <h4><span class="label label-default">Payment History</span></h4>
+        <%= column_chart @waterfall_chart_data, stacked: true, colors: ["white","#0089d0"], library: {vAxis: {gridlines: {color: "transparent"}},bar: {groupWidth: "25%"}, legend:"none", :series => { 0 => { type: "line"} }} %>  <!--this series option is how you create a line in the series, but I'm having issues using the stacked bars. chartkick doesn't support waterfall charts at this moment-->
       </div>
     </div>
 
 
+    <div class= "row">
+      <div class= "col-md-6">
+        <h4><span class="label label-default">How you're doing</span></h4>
+        <div class="list-group">
+          <div class="list-group-item">
+            <div class= "row">
+              <div class="col-md-4">
+                <h5 class="list-group-item-heading">
+                  Tooth Color
+                </h5>
+              </div>
+              <div class="col-md-8">
+                <i class="fa fa-star-o fa-2x" aria-hidden="true">&nbsp;&nbsp;&nbsp;</i>
+                <i class="fa fa-star-o fa-2x" aria-hidden="true">&nbsp;&nbsp;&nbsp;</i>
+                <i class="fa fa-star-o fa-2x" aria-hidden="true">&nbsp;&nbsp;&nbsp;</i>
+                <i class="fa fa-star-o fa-2x" aria-hidden="true">&nbsp;&nbsp;&nbsp;</i>
+                <i class="fa fa-star-o fa-2x" aria-hidden="true"></i>
+              </div>
+            </div>
+            <div class= "row">
+              <div class="col-md-4">
+                <h5 class="list-group-item-heading">
+                  Gum Health
+                </h5>
+              </div>
+              <div class="col-md-8">
+                <i class="fa fa-star-o fa-2x" aria-hidden="true">&nbsp;&nbsp;&nbsp;</i>
+                <i class="fa fa-star-o fa-2x" aria-hidden="true">&nbsp;&nbsp;&nbsp;</i>
+                <i class="fa fa-star-o fa-2x" aria-hidden="true">&nbsp;&nbsp;&nbsp;</i>
+                <i class="fa fa-star-o fa-2x" aria-hidden="true">&nbsp;&nbsp;&nbsp;</i>
+                <i class="fa fa-star-o fa-2x" aria-hidden="true"></i>
+              </div>
+            </div>
+            <div class= "row">
+              <div class="col-md-4">
+                <h5 class="list-group-item-heading">
+                  Plaque Build-up
+                </h5>
+              </div>
+              <div class="col-md-8">
+                <i class="fa fa-star-o fa-2x" aria-hidden="true">&nbsp;&nbsp;&nbsp;</i>
+                <i class="fa fa-star-o fa-2x" aria-hidden="true">&nbsp;&nbsp;&nbsp;</i>
+                <i class="fa fa-star-o fa-2x" aria-hidden="true">&nbsp;&nbsp;&nbsp;</i>
+                <i class="fa fa-star-o fa-2x" aria-hidden="true">&nbsp;&nbsp;&nbsp;</i>
+                <i class="fa fa-star-o fa-2x" aria-hidden="true"></i>
+              </div>
+            </div>
+            <div class= "row">
+              <div class="col-md-4">
+                <h5 class="list-group-item-heading">
+                  More Comments
+                </h5>
+              </div>
+              <div class="col-md-8">
+                <div class="form-group">
+                  &nbsp;
+                </div>
+                <div class="form-group">
+                  &nbsp;
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
+      </div>
+      <div class= "col-md-6">
+        <h4><span class="label label-default">Timeline</span></h4>
+        <ul class="fa-ul">
+          <li><i class="fa fa-refresh fa-spin fa-3x fa-fw" aria-hidden="true"></i>Need a better</li>
+          <li><i class="fa fa-refresh fa-spin fa-3x fa-fw" aria-hidden="true"></i>Timeline Option</li>
+        </ul>
+      </div>
+    </div>
 
     <div class= "row">
       <div class= "col-md-6">
+        <h4><span class="label label-default">Charge Breakdown</span></h4>
         <div class="list-group">
           <% @transactions.each do |t| %>
           <div class="list-group-item">
               <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-2">
+                  &nbsp;
+                </div>
+                <div class="col-md-10">
+                  Date: <%= t.date %>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <p class="list-group-item-text transaction-price"><%= number_to_currency(t.patient_payment + t.insurance_payment,:unit => "$") %></p>
+                </div>
+                <div class="col-md-6">
                   <h4 class="list-group-item-heading"><%= Procedure.find(t.procedure_id).description %></h4>
-                  <p class="list-group-item-text">Total Payment: <%= t.patient_payment + t.insurance_payment %></p>
                   <h5 class="list-group-item-heading">What is it?</h4>
                   <p class="list-group-item-text"><%= Procedure.find(t.procedure_id).long_description %></p>
                 </div>
                 <div class= "col-md-4">
-                  <%= column_chart [{ :name => "Patient", :data => [["You",t.patient_payment]] },{ :name => "Insurance", :data => [["Insurance",t.insurance_payment]] }], stacked: false, height: "100px", library: {vAxis: {gridlines: {color: "transparent"}}} %>
+                  <%= column_chart [{ :name => "Patient", :data => [["You",t.patient_payment]] },{ :name => "Insurance", :data => [["Insurance",t.insurance_payment]]}], stacked: false, height: "100px", library: {vAxis: {gridlines: {color: "transparent"}},hAxis: { }, legend: "none", bar: {groupWidth: "100%"}} %>
                 </div>
               </div>
           </div>
@@ -61,7 +147,42 @@
       </div>
     </div>
 
+<h4><span class="label label-default">Insurance-at-a-Glance</span></h4>
 
+<h4><span class="label label-default">Need Help?</span></h4>
+
+<div class= "row">
+    <div class= "col-md-4">
+      <div class="text-center">
+        <span class="fa-stack fa-5x">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-user fa-stack-1x fa-inverse"></i>
+        </span>
+        <h5>In-person</h5>
+        <p>Visit our office at 1605 Benson Ave, Evanston, IL 60201</p>
+      </div>
+    </div>
+    <div class= "col-md-4">
+      <div class="text-center">
+        <span class="fa-stack fa-5x">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-laptop fa-stack-1x fa-inverse"></i>
+        </span>
+        <h5>Online</h5>
+        <p>Ask questions online at www.elementsdentalstudio.com</p>
+      </div>
+    </div>
+    <div class= "col-md-4">
+      <div class="text-center">
+        <span class="fa-stack fa-5x">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-mobile-phone fa-stack-1x fa-inverse"></i>
+        </span>
+        <h5>By phone</h5>
+        <p>Call us anytime between 8AM-5PM, weekdays</p>
+      </div>
+    </div>
+</div>
 
 
     <div class="btn-group btn-group-justified">
