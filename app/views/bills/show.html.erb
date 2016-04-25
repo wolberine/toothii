@@ -1,5 +1,89 @@
-<%= javascript_include_tag "https://www.google.com/jsapi", "chartkick" %>
 
+
+    <!--abstracted ruby variables that are needed in javascript-->
+    <div id="google_bar_chart_data" data-lat="<%= @google_bar_chart_data %>"></div>
+    <div id="google_waterfall_chart_data" data-long="<%= @google_waterfall_chart_data %>"></div>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      var google_bar_chart_data = $("#google_bar_chart_data").data("lat");
+      var google_waterfall_chart_data = $("#google_waterfall_chart_data").data("long");
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawStackedVisualization);
+      google.charts.setOnLoadCallback(drawWaterfallVisualization);
+
+
+      function drawStackedVisualization() {
+        // Some raw data (not necessarily accurate)
+        var data = google.visualization.arrayToDataTable(google_bar_chart_data);
+
+        var options = {
+          seriesType: 'bars',
+          isStacked: true,
+          vAxis: {
+            gridlines: {
+              color: 'transparent'
+            }
+          }
+          
+        };
+
+        var chart = new google.visualization.ComboChart(document.getElementById('stacked_chart_div'));
+        chart.draw(data, options);
+  }
+
+      function drawWaterfallVisualization() {
+        // Some raw data (not necessarily accurate)
+        var data = google.visualization.arrayToDataTable(google_waterfall_chart_data, true);
+
+        var options = {
+          legend: 'none',
+          bar: { groupWidth: '100%' }, // Remove space between bars.
+          candlestick: {
+            fallingColor: { strokeWidth: 0, fill: '#a52714' }, // red
+            risingColor: { strokeWidth: 0, fill: '#0f9d58' }   // green
+          },
+          vAxis: {
+            gridlines: {
+              color: 'transparent'
+            }
+          }
+        };
+
+        var chart = new google.visualization.CandlestickChart(document.getElementById('waterfall_chart_div'));
+        chart.draw(data, options);
+  }
+
+      function drawTransactionChart(chart_id, patient_payment, insurance_payment) {
+
+      var data = google.visualization.arrayToDataTable([
+              ["Payor", "Payment", { role: "style" }, { role: "annotation" } ],
+              ["You", parseFloat(patient_payment), "blue", patient_payment],
+              ["Insurance", parseFloat(insurance_payment), "red", insurance_payment]
+            ]);
+         
+       var view = new google.visualization.DataView(data);
+            view.setColumns([0, 1,
+                             { calc: "stringify",
+                               sourceColumn: 1,
+                               type: "string",
+                               role: "annotation" },
+                             2]);
+
+         var options = {
+            bar: {groupWidth: "100%"},
+            legend: { position: "none" },
+            vAxis: {
+              gridlines: {
+                color: 'transparent'
+              }
+            }
+          };
+          var chart = new google.visualization.ColumnChart(document.getElementById(chart_id));
+          chart.draw(view, options);
+
+      }
+    </script>
 <div class="page-header">
   <div class="row">
     <div class="col-md-4">
@@ -49,11 +133,11 @@
     <div class= "row">
       <div class= "col-md-6">
         <h4><span class="label label-default">Today's Charges</span></h4>
-        <%= column_chart @bar_chart_data, stacked: true, library: {vAxis: {gridlines: {color: "transparent"}},bar: {groupWidth: "25%"}} %>
+        <div id="stacked_chart_div" ></div>
       </div>
       <div class= "col-md-6">
         <h4><span class="label label-default">Payment History</span></h4>
-        <%= column_chart @waterfall_chart_data, stacked: true, colors: ["white","#0089d0"], library: {vAxis: {gridlines: {color: "transparent"}},bar: {groupWidth: "25%"}, legend:"none", :series => { 0 => { type: "line"} }} %>  <!--this series option is how you create a line in the series, but I'm having issues using the stacked bars. chartkick doesn't support waterfall charts at this moment-->
+        <div id="waterfall_chart_div" ></div>
       </div>
     </div>
 
@@ -160,7 +244,16 @@
                   <p class="list-group-item-text"><%= Procedure.find(t.procedure_id).long_description %></p>
                 </div>
                 <div class= "col-md-4">
-                  <%= column_chart [{ :name => "Patient", :data => [["You",t.patient_payment]] },{ :name => "Insurance", :data => [["Insurance",t.insurance_payment]]}], stacked: false, height: "100px", library: {vAxis: {gridlines: {color: "transparent"}},hAxis: { }, legend: "none", bar: {groupWidth: "100%"}} %>
+                  <% transaction_chart_id = 'transaction_chart' + t.id.to_s %>
+                  <% transaction_chart_package = Array.new
+                      transaction_chart_package.push(transaction_chart_id.to_s) 
+                      transaction_chart_package.push(t.patient_payment) 
+                      transaction_chart_package.push(t.insurance_payment) %>
+                  <% raw json_escape(transaction_chart_package.to_json) %>
+                  <div id="<%= transaction_chart_id %>" ></div>
+                  <script type="text/javascript">
+                    google.charts.setOnLoadCallback(function(){drawTransactionChart('<%= transaction_chart_id %>','<%= t.patient_payment %>','<%= t.insurance_payment %>')});
+                  </script>
                 </div>
               </div>
           </div>

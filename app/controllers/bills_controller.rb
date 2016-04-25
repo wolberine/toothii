@@ -17,6 +17,13 @@ class BillsController < ApplicationController
     @total_payment = 0.to_f 
     @total_payment = @total_insurance_payment + @total_patient_payment
 
+    @google_bar_chart_data = [
+      ["Type of payment","Patient Payment","Insurance Payment"],
+      ["Payment Breakdown", @total_patient_payment, @total_insurance_payment]
+    ]
+
+
+    #delete this once all google implementations are done
     @bar_chart_data = [
     {
       name: "Patient Payment", 
@@ -44,6 +51,17 @@ class BillsController < ApplicationController
       #this is for the charge breakdown
       @procedure_chart_data.push({ :name => "Patient", :data => [["You",t.patient_payment]] },{ :name => "Insurance", :data => [["Insurance",t.insurance_payment]] })
 
+    end
+
+    current = 0
+    previous = 0
+    @google_waterfall_chart_data = Array.new
+    #need to sort transactions by date
+    @transactions.each do |t|
+      current = current + t.patient_payment
+      array_element = [t.date.to_s, previous, previous, current, current]
+      @google_waterfall_chart_data.push(array_element)
+      previous = current
     end
 
 
