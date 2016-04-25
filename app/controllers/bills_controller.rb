@@ -9,33 +9,27 @@ class BillsController < ApplicationController
 
     @total_insurance_payment = 0.to_f
     @total_patient_payment = 0.to_f
+    @total_deductible_payment = 0.to_f
 
     @transactions.each do |t|
       @total_insurance_payment = @total_insurance_payment + t.insurance_payment
       @total_patient_payment = @total_patient_payment + t.patient_payment
+      @total_deductible_payment = @total_deductible_payment + t.deductible_payment
     end
     @total_payment = 0.to_f 
-    @total_payment = @total_insurance_payment + @total_patient_payment
+    @total_payment = @total_insurance_payment + @total_patient_payment + @total_deductible_payment
 
     @google_bar_chart_data = [
-      ["Type of payment","Patient Payment","Insurance Payment"],
-      ["Payment Breakdown", @total_patient_payment, @total_insurance_payment]
+      ["Type of payment","Insurance Payment","Patient Payment","Deductible Payment"],
+      ["Payment Breakdown", @total_insurance_payment, @total_patient_payment, @total_deductible_payment]
+      #["Type of payment", "Payment"],
+      #["Insurance Payment", @total_insurance_payment],
+      #["Patient Payment", @total_patient_payment],
+      #["Deductible Payment", @total_deductible_payment]
     ]
 
-
-    #delete this once all google implementations are done
-    @bar_chart_data = [
-    {
-      name: "Patient Payment", 
-      data: [["Payment Breakdown", @total_patient_payment]]
-
-
-    },
-    {
-      name: "Insurance Payment", 
-      data: [["Payment Breakdown", @total_insurance_payment]]
-    }
-    ]
+#so... this is confusing... patient payment is co-insurance, but need to add deductible to get everything the patient
+#actually pays
     
     counter = 0
     @waterfall_chart_data = Array.new
@@ -44,12 +38,10 @@ class BillsController < ApplicationController
       white_hash = { :name => "", :data => [[t.date.to_s, counter]]}
       @waterfall_chart_data.push(white_hash)
       
-      temp_hash = { :name => t.id.to_s, :data => [[t.date.to_s,t.patient_payment]] }
-      counter = counter + t.patient_payment
+      temp_hash = { :name => t.id.to_s, :data => [[t.date.to_s,t.patient_payment+t.deductible_payment]] }
+      counter = counter + t.patient_payment + t.deductible_payment
       @waterfall_chart_data.push(temp_hash)
 
-      #this is for the charge breakdown
-      @procedure_chart_data.push({ :name => "Patient", :data => [["You",t.patient_payment]] },{ :name => "Insurance", :data => [["Insurance",t.insurance_payment]] })
 
     end
 

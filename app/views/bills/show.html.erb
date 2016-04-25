@@ -19,12 +19,20 @@
 
         var options = {
           seriesType: 'bars',
+          series: { 
+            2: {color: '#4A7FB0'},  //deductible
+            1: {color: '#5B9BD5'}, //patient
+            0: {color: '#9DC3E6'}  //insurance
+          },
+
+          bar: {groupWidth: "30%"},
           isStacked: true,
           vAxis: {
             gridlines: {
               color: 'transparent'
-            }
-          }
+            },
+          },
+          //hAxis: { textPosition: 'none' }
           
         };
 
@@ -38,11 +46,12 @@
 
         var options = {
           legend: 'none',
-          bar: { groupWidth: '100%' }, // Remove space between bars.
+          bar: { groupWidth: '50%' }, // Remove space between bars.
           candlestick: {
             fallingColor: { strokeWidth: 0, fill: '#a52714' }, // red
-            risingColor: { strokeWidth: 0, fill: '#0f9d58' }   // green
+            risingColor: { strokeWidth: 0, fill: '#5B9BD5' }   // blue
           },
+          backgroundColor: { fill:'transparent' },
           vAxis: {
             gridlines: {
               color: 'transparent'
@@ -58,8 +67,8 @@
 
       var data = google.visualization.arrayToDataTable([
               ["Payor", "Payment", { role: "style" }, { role: "annotation" } ],
-              ["You", parseFloat(patient_payment), "blue", patient_payment],
-              ["Insurance", parseFloat(insurance_payment), "red", insurance_payment]
+              ["You", parseFloat(patient_payment), '#5B9BD5', patient_payment],
+              ["Insurance", parseFloat(insurance_payment), '#9DC3E6', insurance_payment]
             ]);
          
        var view = new google.visualization.DataView(data);
@@ -73,9 +82,28 @@
          var options = {
             bar: {groupWidth: "100%"},
             legend: { position: "none" },
+            'height': 100,
             vAxis: {
               gridlines: {
-                color: 'transparent'
+                color: 'transparent',
+              },
+              viewWindow: {min:0, max: Math.max(parseFloat(patient_payment),parseFloat(insurance_payment))},
+              textPosition: 'none',
+
+            },
+            hAxis:{
+              textStyle:{
+                //put a font size here if you want
+              },
+            },
+            annotations: {
+              textStyle: {
+              fontSize: 18,
+              bold: true,
+              color: '#871b47',     // The color of the text.
+              //auraColor: '#d799ae', // The color of the text outline.
+              opacity: 1,          // The transparency of the text.
+              textPosition : 'out',
               }
             }
           };
@@ -107,15 +135,15 @@
       </strong>
     </div>
   </div>
-  <div class="row">
+  <div class="row row-eq-height">
     <div class= "col-md-4">
       <h4>Elements<br>Dental Studio</h4>
     </div>
-    <div class= "col-md-4">
+    <div class= "col-md-4 section-background">
       <h5>1605 Benson Ave. <br>Evanston, IL 60201</h5> 
     </div>
-    <div class= "col-md-4">
-      <h3><span class="label label-default">Payment Due Today <%= number_to_currency(@total_patient_payment, :unit => "$") %></span></h3>
+    <div class= "col-md-4 elements-background">
+      <h4><span class="elements-theme"><strong>Payment Due Today: <%= number_to_currency(@total_patient_payment+@total_deductible_payment, :unit => "$") %></strong></span></h4>
     </div>
   </div>
 </div>
@@ -135,8 +163,9 @@
         <h4><span class="label label-default">Today's Charges</span></h4>
         <div id="stacked_chart_div" ></div>
       </div>
-      <div class= "col-md-6">
+      <div class= "col-md-6 section-background">
         <h4><span class="label label-default">Payment History</span></h4>
+        <h5>Deductible Limit: <%= number_to_currency(Patient.find(@bill.patient_id).deductible_limit, :unit => '$') %></h5>
         <div id="waterfall_chart_div" ></div>
       </div>
     </div>
@@ -263,6 +292,38 @@
     </div>
 
 <h4><span class="label label-default">Insurance-at-a-Glance</span></h4>
+  <div class="row section-background">
+    <div class="col-md-6">
+      <h5><strong>Insurance Billing Codes</strong></h5>
+      <p>Insurance code 1</p>
+      <p>Insurance Code 2</p>
+    </div>
+    <div class="col-md-6">
+      <h5><strong>Deductible</strong></h5>
+      <p>
+        Your deductible is the maount you pay before 
+        insurance begins to cover any dental expenses. Before this
+        procedure, you had paid XXXXX of your deductible of YYYYY, leaving
+        ZZZZ left to pay.
+      </p>
+    </div>
+  </div>
+  <div class="row section-background">
+    <div class="col-md-6">
+      <h5><strong>Co-Insurance</strong></h5>
+      <p>
+        Your co-insurance is what you pay o the remaining balance after your deductible
+        is met. Your insurance pays GGGGG of this value.
+      </p>
+    </div>
+    <div class="col-md-6">
+      <h5><strong>Co-Insurance</strong></h5>
+      <p>
+        Your insurance amounts to FFFFFF, or HHHHHHH of the remaining balance after your deductible is met.
+      </p>
+    </div>
+  </div>
+
 
 <h4><span class="label label-default">Need Help?</span></h4>
 
