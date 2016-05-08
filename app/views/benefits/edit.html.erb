@@ -1,0 +1,64 @@
+<!-- Validation failure messages -->
+<% if @benefit.errors.any? %>
+  <% @benefit.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Edit Benefit #<%= @benefit.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/update_benefit/<%= @benefit.id %>" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for monetaryamt -->
+      <div class="form-group">
+        <label for="monetaryamt" class="control-label">
+          Monetaryamt
+        </label>
+
+        <input type="text" id="monetaryamt" name="monetaryamt" placeholder="Monetaryamt" class="form-control" value="<%= @benefit.monetaryamt %>">
+      </div>
+
+      <!-- Label and input for percent -->
+      <div class="form-group">
+        <label for="percent" class="control-label">
+          Percent
+        </label>
+
+        <input type="text" id="percent" name="percent" placeholder="Percent" class="form-control" value="<%= @benefit.percent %>">
+      </div>
+
+      <!-- Label and input for covcat_id -->
+      <div class="form-group">
+        <label for="covcat_id" class="control-label">
+          Covcat
+        </label>
+
+        <input type="text" id="covcat_id" name="covcat_id" placeholder="Covcat" class="form-control" value="<%= @benefit.covcat_id %>">
+      </div>
+
+      <!-- Label and input for insplan_id -->
+      <div class="form-group">
+        <label for="insplan_id" class="control-label">
+          Insplan
+        </label>
+
+        <input type="text" id="insplan_id" name="insplan_id" placeholder="Insplan" class="form-control" value="<%= @benefit.insplan_id %>">
+      </div>
+
+      <button class="btn btn-warning">
+        Update Benefit
+      </button>
+      or
+      <a href="/benefits/<%= @benefit.id %>">Cancel</a>
+    </form>
+  </div>
+</div>

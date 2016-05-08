@@ -1,0 +1,55 @@
+<!-- Validation failure messages -->
+<% if @fee.errors.any? %>
+  <% @fee.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Edit Fee #<%= @fee.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/update_fee/<%= @fee.id %>" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for code -->
+      <div class="form-group">
+        <label for="code" class="control-label">
+          Code
+        </label>
+
+        <input type="text" id="code" name="code" placeholder="Code" class="form-control" value="<%= @fee.code %>">
+      </div>
+
+      <!-- Label and input for feeschedule_id -->
+      <div class="form-group">
+        <label for="feeschedule_id" class="control-label">
+          Feeschedule
+        </label>
+
+        <input type="text" id="feeschedule_id" name="feeschedule_id" placeholder="Feeschedule" class="form-control" value="<%= @fee.feeschedule_id %>">
+      </div>
+
+      <!-- Label and input for amount -->
+      <div class="form-group">
+        <label for="amount" class="control-label">
+          Amount
+        </label>
+
+        <input type="text" id="amount" name="amount" placeholder="Amount" class="form-control" value="<%= @fee.amount %>">
+      </div>
+
+      <button class="btn btn-warning">
+        Update Fee
+      </button>
+      or
+      <a href="/fees/<%= @fee.id %>">Cancel</a>
+    </form>
+  </div>
+</div>

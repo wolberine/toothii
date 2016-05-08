@@ -1,4 +1,89 @@
 Rails.application.routes.draw do
+  # Routes for the Covcat resource:
+  # CREATE
+  get "/covcats/new", :controller => "covcats", :action => "new"
+  post "/create_covcat", :controller => "covcats", :action => "create"
+
+  # READ
+  get "/covcats", :controller => "covcats", :action => "index"
+  get "/covcats/:id", :controller => "covcats", :action => "show"
+
+  # UPDATE
+  get "/covcats/:id/edit", :controller => "covcats", :action => "edit"
+  post "/update_covcat/:id", :controller => "covcats", :action => "update"
+
+  # DELETE
+  get "/delete_covcat/:id", :controller => "covcats", :action => "destroy"
+  #------------------------------
+
+  # Routes for the Benefit resource:
+  # CREATE
+  get "/benefits/new", :controller => "benefits", :action => "new"
+  post "/create_benefit", :controller => "benefits", :action => "create"
+
+  # READ
+  get "/benefits", :controller => "benefits", :action => "index"
+  get "/benefits/:id", :controller => "benefits", :action => "show"
+
+  # UPDATE
+  get "/benefits/:id/edit", :controller => "benefits", :action => "edit"
+  post "/update_benefit/:id", :controller => "benefits", :action => "update"
+
+  # DELETE
+  get "/delete_benefit/:id", :controller => "benefits", :action => "destroy"
+  #------------------------------
+
+  # Routes for the Insplan resource:
+  # CREATE
+  get "/insplans/new", :controller => "insplans", :action => "new"
+  post "/create_insplan", :controller => "insplans", :action => "create"
+
+  # READ
+  get "/insplans", :controller => "insplans", :action => "index"
+  get "/insplans/:id", :controller => "insplans", :action => "show"
+
+  # UPDATE
+  get "/insplans/:id/edit", :controller => "insplans", :action => "edit"
+  post "/update_insplan/:id", :controller => "insplans", :action => "update"
+
+  # DELETE
+  get "/delete_insplan/:id", :controller => "insplans", :action => "destroy"
+  #------------------------------
+
+  # Routes for the Fee resource:
+  # CREATE
+  get "/fees/new", :controller => "fees", :action => "new"
+  post "/create_fee", :controller => "fees", :action => "create"
+
+  # READ
+  get "/fees", :controller => "fees", :action => "index"
+  get "/fees/:id", :controller => "fees", :action => "show"
+
+  # UPDATE
+  get "/fees/:id/edit", :controller => "fees", :action => "edit"
+  post "/update_fee/:id", :controller => "fees", :action => "update"
+
+  # DELETE
+  get "/delete_fee/:id", :controller => "fees", :action => "destroy"
+  #------------------------------
+
+  # Routes for the Feeschedule resource:
+  # CREATE
+  get "/feeschedules/new", :controller => "feeschedules", :action => "new"
+  post "/create_feeschedule", :controller => "feeschedules", :action => "create"
+
+  # READ
+  get "/feeschedules", :controller => "feeschedules", :action => "index"
+  get "/feeschedules/:id", :controller => "feeschedules", :action => "show"
+
+  # UPDATE
+  get "/feeschedules/:id/edit", :controller => "feeschedules", :action => "edit"
+  post "/update_feeschedule/:id", :controller => "feeschedules", :action => "update"
+
+  # DELETE
+  get "/delete_feeschedule/:id", :controller => "feeschedules", :action => "destroy"
+  #------------------------------
+
   # Routes for the Procedure resource:
 
   # CREATE

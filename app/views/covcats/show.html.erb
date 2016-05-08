@@ -1,0 +1,28 @@
+<div class="page-header">
+  <h3>Covcat #<%= @covcat.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <dl class="dl-horizontal">
+      <dt>Defaultpercent</dt>
+      <dd><%= @covcat.defaultpercent %></dd>
+
+      <dt>Description</dt>
+      <dd><%= @covcat.description %></dd>
+
+    </dl>
+
+    <div class="btn-group btn-group-justified">
+      <a href="/covcats" class="btn btn-primary">
+        Back
+      </a>
+      <a href="/covcats/<%= @covcat.id %>/edit" class="btn btn-warning">
+        Edit
+      </a>
+      <a href="/delete_covcat/<%= @covcat.id %>" class="btn btn-danger" rel="nofollow">
+        Delete
+      </a>
+    </div>
+  </div>
+</div>

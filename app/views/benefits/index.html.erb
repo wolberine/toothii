@@ -1,0 +1,34 @@
+<div class="page-header">
+  <h1>
+    Benefits
+    <a href="/benefits/new" class="btn btn-lg btn-success">New Benefit</a>
+  </h1>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-striped table-hover">
+      <tr>
+        <th>Monetaryamt</th>
+        <th>Percent</th>
+        <th>Covcat</th>
+        <th>Insplan</th>
+        <th>Actions</th>
+      </tr>
+
+      <% @benefits.each do |benefit| %>
+      <tr>
+        <td><%= benefit.monetaryamt %></td>
+        <td><%= benefit.percent %></td>
+        <td><%= benefit.covcat_id %></td>
+        <td><%= benefit.insplan_id %></td>
+        <td>
+          <a href="/benefits/<%= benefit.id %>" class="btn btn-primary">Show</a>
+          <a href="/benefits/<%= benefit.id %>/edit" class="btn btn-warning">Edit</a>
+          <a href="/delete_benefit/<%= benefit.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

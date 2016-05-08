@@ -1,0 +1,31 @@
+<div class="page-header">
+  <h3>Insplan #<%= @insplan.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <dl class="dl-horizontal">
+      <dt>Annualmax</dt>
+      <dd><%= @insplan.annualmax %></dd>
+
+      <dt>Deductible</dt>
+      <dd><%= @insplan.deductible %></dd>
+
+      <dt>Groupname</dt>
+      <dd><%= @insplan.groupname %></dd>
+
+    </dl>
+
+    <div class="btn-group btn-group-justified">
+      <a href="/insplans" class="btn btn-primary">
+        Back
+      </a>
+      <a href="/insplans/<%= @insplan.id %>/edit" class="btn btn-warning">
+        Edit
+      </a>
+      <a href="/delete_insplan/<%= @insplan.id %>" class="btn btn-danger" rel="nofollow">
+        Delete
+      </a>
+    </div>
+  </div>
+</div>
