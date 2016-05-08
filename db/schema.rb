@@ -11,11 +11,49 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160421045251) do
+ActiveRecord::Schema.define(version: 20160508210029) do
+
+  create_table "benefits", force: :cascade do |t|
+    t.float    "monetaryamt"
+    t.integer  "percent"
+    t.integer  "covcat_id"
+    t.integer  "insplan_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "bills", force: :cascade do |t|
     t.date     "date"
     t.integer  "patient_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "covcats", force: :cascade do |t|
+    t.integer  "defaultpercent"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "fees", force: :cascade do |t|
+    t.string   "code"
+    t.integer  "feeschedule_id"
+    t.float    "amount"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "feeschedules", force: :cascade do |t|
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "insplans", force: :cascade do |t|
+    t.float    "annualmax"
+    t.float    "deductible"
+    t.string   "groupname"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
