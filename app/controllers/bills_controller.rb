@@ -57,6 +57,7 @@ class BillsController < ApplicationController
       previous = current
     end
 
+    @show_for_printing = 1
 
   end
 

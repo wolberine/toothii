@@ -2,7 +2,6 @@
 
     <!--abstracted ruby variables that are needed in javascript-->
     <div id="google_bar_chart_data" data-lat="<%= @google_bar_chart_data %>"></div>
-    <div id="google_waterfall_chart_data" data-long="<%= @google_waterfall_chart_data %>"></div>
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -16,11 +15,12 @@
         // Some raw data (not necessarily accurate)
         var data = google.visualization.arrayToDataTable(
           [["Type of Payment","Insurance", { role: "annotation" },"Co-Insurance", { role: "annotation" }, "Deductible", { role: "annotation" }],
-          ["",parseFloat(google_bar_chart_data[0]),"Insurance ".concat(google_bar_chart_data[0]),parseFloat(google_bar_chart_data[1]),"Co-Insurance",parseFloat(google_bar_chart_data[2]),"Deductible"]]
+          ["",parseFloat(google_bar_chart_data[0]),"Insurance $".concat(google_bar_chart_data[0]),parseFloat(google_bar_chart_data[1]),"Co-Insurance $".concat(google_bar_chart_data[1]),parseFloat(google_bar_chart_data[2]),"Deductible $".concat(google_bar_chart_data[2])]]
 
           );
 
         var options = {
+          title:'Total Fee: $'.concat(google_bar_chart_data[1]+google_bar_chart_data[2]),
           seriesType: 'bars',
           series: { 
             2: {color: '#4A7FB0'},  //deductible
@@ -28,12 +28,15 @@
             0: {color: '#9DC3E6'}  //insurance
           },
 
-          bar: {groupWidth: "30%"},
+          bar: {groupWidth: "100%"},
           isStacked: true,
+          legend: {position: 'none'},
           vAxis: {
             gridlines: {
               color: 'transparent'
             },
+            baselineColor: 'transparent',
+            textPosition: 'none',
           },
           //hAxis: { textPosition: 'none' }
           
@@ -43,114 +46,21 @@
         chart.draw(data, options);
   }
 
-      function drawWaterfallVisualization() {
-        // Some raw data (not necessarily accurate)
-        var data = google.visualization.arrayToDataTable(google_waterfall_chart_data, true);
-
-        var options = {
-          legend: 'none',
-          bar: { groupWidth: '50%' }, // Remove space between bars.
-          candlestick: {
-            fallingColor: { strokeWidth: 0, fill: '#a52714' }, // red
-            risingColor: { strokeWidth: 0, fill: '#5B9BD5' }   // blue
-          },
-          backgroundColor: { fill:'transparent' },
-          vAxis: {
-            gridlines: {
-              color: 'transparent'
-            }
-          }
-        };
-
-        var chart = new google.visualization.CandlestickChart(document.getElementById('waterfall_chart_div'));
-        chart.draw(data, options);
-  }
-
-      function drawTransactionChart(chart_id, patient_payment, insurance_payment) {
-
-      var data = google.visualization.arrayToDataTable([
-              ["Payor", "Payment", { role: "style" }, { role: "annotation" } ],
-              ["You", parseFloat(patient_payment), '#5B9BD5', patient_payment],
-              ["Insurance", parseFloat(insurance_payment), '#9DC3E6', insurance_payment]
-            ]);
-         
-       var view = new google.visualization.DataView(data);
-            view.setColumns([0, 1,
-                             { calc: "stringify",
-                               sourceColumn: 1,
-                               type: "string",
-                               role: "annotation" },
-                             2]);
-
-         var options = {
-            bar: {groupWidth: "100%"},
-            legend: { position: "none" },
-            'height': 100,
-            vAxis: {
-              gridlines: {
-                color: 'transparent',
-              },
-              viewWindow: {min:0, max: Math.max(parseFloat(patient_payment),parseFloat(insurance_payment))},
-              textPosition: 'none',
-
-            },
-            hAxis:{
-              textStyle:{
-                //put a font size here if you want
-              },
-            },
-            annotations: {
-              textStyle: {
-              fontSize: 18,
-              bold: true,
-              color: '#871b47',     // The color of the text.
-              //auraColor: '#d799ae', // The color of the text outline.
-              opacity: 1,          // The transparency of the text.
-              textPosition : 'out',
-              }
-            }
-          };
-          var chart = new google.visualization.ColumnChart(document.getElementById(chart_id));
-          chart.draw(view, options);
-
-      }
     </script>
 
-<div class="page-header">
-  <div class="row">
-    <div class="col-xs-4">
-      &nbsp;
-    </div>
-    <div class="col-xs-4">
-      &nbsp;
-    </div>
-    <div class="col-xs-2">
-      <strong>
-        <p class="text-left">
-          <!--<%= @bill.date %>-->
-        </p>
-      </strong>
-    </div>
-    <div class="col-xs-2">
-      <strong>
-        <p class="text-right">
-            <!--<%= Patient.find(@bill.patient_id).name %>-->
-        </p>
-      </strong>
-    </div>
-  </div>
+
   <div class="row row-eq-height">
-    <div class= "col-xs-4">
+    <div class= "col-xs-3">
       <h4>Elements<br>Dental Studio</h4>
     </div>
     <div class= "col-xs-4 section-background">
       <h5>1605 Benson Ave. <br>Evanston, IL 60201</h5> 
     </div>
-    <div class= "col-xs-4 elements-background">
-      <h4><span class="elements-theme"><strong>Payment Due Today: <%= number_to_currency(@total_patient_payment+@total_deductible_payment, :unit => "$") %></strong></span></h4>
+    <div class= "col-xs-5 elements-background single-line-of-text">
+      <h4><span class="elements-theme"><strong>Payment Due: <%= number_to_currency(@total_patient_payment+@total_deductible_payment, :unit => "$") %></strong></span></h4>
     </div>
   </div>
-</div>
+
 
 <div class="row">
   <div class="col-xs-12">
@@ -166,11 +76,11 @@
     <div class= "row">
       <div class= "col-xs-6">
         <h4><span class="label label-default">Today's Charges</span></h4>
-        <div id="stacked_chart_div" ></div>
+        <div id="stacked_chart_div" class="chart-height"></div>
       </div>
       <div class= "col-xs-6">
         <h4><span class="label label-default">Treatment Today</span></h4>
-        <div class="section-background">
+        <div class="section-background chart-height">
           <h4><strong>What it was</strong></h4>
           <h5><%= @bill.bill_note%></h5>
           <h4><strong>Insurance codes</strong></h4>
@@ -194,33 +104,33 @@
           <h4><span class="label label-default">Need More Help?</span></h4>
           <div class="text-center">
             <span class="fa-stack fa-5x">
-              <i class="fa fa-circle fa-stack-2x"></i>
-              <i class="fa fa-laptop fa-stack-1x fa-inverse"></i>
+              <i class="fa fa-circle fa-stack-2x contact-icon-background"></i>
+              <i class="fa fa-laptop fa-stack-1x fa-inverse contact-icon"></i>
             </span>
             <h5>Online</h5>
-            <p>Visit our website @ <strong>www.elementsdentalstudio.com</strong></p>
+            <p class="card-line-height">Visit our website @ <strong>www.elementsdentalstudio.com</strong></p>
           </div>
         </div>
         <div class= "col-xs-4">
           <h4><span class="label">&nbsp;</span></h4>
           <div class="text-center">
             <span class="fa-stack fa-5x">
-              <i class="fa fa-circle fa-stack-2x"></i>
-              <i class="fa fa-mobile-phone fa-stack-1x fa-inverse"></i>
+              <i class="fa fa-circle fa-stack-2x contact-icon-background"></i>
+              <i class="fa fa-mobile-phone fa-stack-1x fa-inverse contact-icon"></i>
             </span>
             <h5>By phone</h5>
-            <p>Give us a call @ <strong>847-859-2617</strong></p>
+            <p class="card-line-height">Give us a call @ <strong>847-859-2617</strong></p>
           </div>
         </div>
         <div class= "col-xs-4">
           <h4><span class="label label-default">Leave a review</span></h4>
           <div class="text-center">
             <span class="fa-stack fa-5x">
-              <i class="fa fa-circle fa-stack-2x"></i>
-              <i class="fa fa-star-o fa-stack-1x fa-inverse"></i>
+              <i class="fa fa-circle fa-stack-2x contact-icon-background"></i>
+              <i class="fa fa-star-o fa-stack-1x fa-inverse contact-icon"></i>
             </span>
             <h5>Thanks!</h5>
-            <p>Thanks again for choosing Elements Dental Studio. If you have time, we'd really appreciate your feedback and review at <strong>www.elementsdentalstudio.com/review</strong></p>
+            <p class="card-line-height">Thanks again for choosing Elements Dental Studio. If you have time, we'd really appreciate your feedback and review at <strong>www.elementsdentalstudio.com/review</strong></p>
           </div>
         </div>
     </div>
