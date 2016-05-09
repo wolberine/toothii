@@ -11,11 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20160509151846) do
-=======
-ActiveRecord::Schema.define(version: 20160509021739) do
->>>>>>> origin/master
 
   create_table "benefits", force: :cascade do |t|
     t.float    "monetaryamt"
@@ -31,14 +27,11 @@ ActiveRecord::Schema.define(version: 20160509021739) do
     t.integer  "patient_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-<<<<<<< HEAD
     t.text     "bill_note"
-=======
     t.float    "total_deductible_payment"
     t.float    "total_insurance_payment"
     t.float    "total_patient_payment"
     t.float    "total_insurance_discount"
->>>>>>> origin/master
   end
 
   create_table "covcats", force: :cascade do |t|
