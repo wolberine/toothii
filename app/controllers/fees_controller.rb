@@ -13,7 +13,7 @@ class FeesController < ApplicationController
 
   def create
     @fee = Fee.new
-    @fee.code = params[:code]
+    @fee.procedure_id = params[:procedure_id]
     @fee.feeschedule_id = params[:feeschedule_id]
     @fee.amount = params[:amount]
 
@@ -31,7 +31,7 @@ class FeesController < ApplicationController
   def update
     @fee = Fee.find(params[:id])
 
-    @fee.code = params[:code]
+    @fee.procedure_id = params[:procedure_id]
     @fee.feeschedule_id = params[:feeschedule_id]
     @fee.amount = params[:amount]
 

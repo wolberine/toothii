@@ -17,7 +17,7 @@
 
       <% @fees.each do |fee| %>
       <tr>
-        <td><%= fee.code %></td>
+        <td><%= Procedure.find(fee.procedure_id).code %></td>
         <td><%= fee.feeschedule_id %></td>
         <td><%= fee.amount %></td>
         <td>

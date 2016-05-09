@@ -20,7 +20,7 @@
       <tr>
         <td><%= benefit.monetaryamt %></td>
         <td><%= benefit.percent %></td>
-        <td><%= benefit.covcat_id %></td>
+        <td><%= Covcat.find(benefit.covcat_id).description %></td>
         <td><%= benefit.insplan_id %></td>
         <td>
           <a href="/benefits/<%= benefit.id %>" class="btn btn-primary">Show</a>

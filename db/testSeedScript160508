@@ -1,0 +1,65 @@
+Covcat.delete_all
+Covcat.create(
+  [
+    {:description=>"General"},
+    {:description=>"Diagnostic"},
+    {:description=>"Periodontics"},
+    {:description=>"Restorative"},
+    {:description=>"Endodontics"},
+    {:description=>"Maxillofacial"},
+    {:description=>"Crowns"},
+    {:description=>"Accident"},
+    {:description=>"Orthodontics"},
+    {:description=>"Prosthodontics"},
+    {:description=>"Oral Surgery"},
+    {:description=>"Routine Preventative"},
+    {:description=>"Diagnostic X-Ray"},
+    {:description=>"Adjunctive"}
+  ]
+)
+
+Feeschedule.delete_all
+Feeschedule.create(
+  [
+    {:description=>"Elements Dental Studio"}
+  ]
+)
+
+Fee.delete_all
+Fee.create(
+  [
+    {:procedure_id=>Procedure.find_by(:code=>"D0150").id, :amount=>99, :feeschedule_id=>Feeschedule.find_by(:description=>"Elements Dental Studio").id},
+    {:procedure_id=>Procedure.find_by(:code=>"D0210").id, :amount=>150, :feeschedule_id=>Feeschedule.find_by(:description=>"Elements Dental Studio").id},
+    {:procedure_id=>Procedure.find_by(:code=>"D0220").id, :amount=>35, :feeschedule_id=>Feeschedule.find_by(:description=>"Elements Dental Studio").id},
+    {:procedure_id=>Procedure.find_by(:code=>"D0230").id, :amount=>29, :feeschedule_id=>Feeschedule.find_by(:description=>"Elements Dental Studio").id},
+    {:procedure_id=>Procedure.find_by(:code=>"D0274").id, :amount=>76, :feeschedule_id=>Feeschedule.find_by(:description=>"Elements Dental Studio").id},
+    {:procedure_id=>Procedure.find_by(:code=>"D1110").id, :amount=>115, :feeschedule_id=>Feeschedule.find_by(:description=>"Elements Dental Studio").id},
+    {:procedure_id=>Procedure.find_by(:code=>"D1208").id, :amount=>42, :feeschedule_id=>Feeschedule.find_by(:description=>"Elements Dental Studio").id},
+    {:procedure_id=>Procedure.find_by(:code=>"D2391").id, :amount=>185, :feeschedule_id=>Feeschedule.find_by(:description=>"Elements Dental Studio").id},
+    {:procedure_id=>Procedure.find_by(:code=>"D2392").id, :amount=>260, :feeschedule_id=>Feeschedule.find_by(:description=>"Elements Dental Studio").id},
+    {:procedure_id=>Procedure.find_by(:code=>"D2740").id, :amount=>1300, :feeschedule_id=>Feeschedule.find_by(:description=>"Elements Dental Studio").id},
+    {:procedure_id=>Procedure.find_by(:code=>"D2750").id, :amount=>1300, :feeschedule_id=>Feeschedule.find_by(:description=>"Elements Dental Studio").id},
+    {:procedure_id=>Procedure.find_by(:code=>"D2920").id, :amount=>125, :feeschedule_id=>Feeschedule.find_by(:description=>"Elements Dental Studio").id},
+    {:procedure_id=>Procedure.find_by(:code=>"D2940").id, :amount=>136, :feeschedule_id=>Feeschedule.find_by(:description=>"Elements Dental Studio").id},
+    {:procedure_id=>Procedure.find_by(:code=>"D2950").id, :amount=>250, :feeschedule_id=>Feeschedule.find_by(:description=>"Elements Dental Studio").id},
+    {:procedure_id=>Procedure.find_by(:code=>"D2952").id, :amount=>400, :feeschedule_id=>Feeschedule.find_by(:description=>"Elements Dental Studio").id},
+    {:procedure_id=>Procedure.find_by(:code=>"D4341").id, :amount=>280, :feeschedule_id=>Feeschedule.find_by(:description=>"Elements Dental Studio").id},
+    {:procedure_id=>Procedure.find_by(:code=>"D9310").id, :amount=>0, :feeschedule_id=>Feeschedule.find_by(:description=>"Elements Dental Studio").id},
+    {:procedure_id=>Procedure.find_by(:code=>"D0140").id, :amount=>85, :feeschedule_id=>Feeschedule.find_by(:description=>"Elements Dental Studio").id}
+  ]
+)
+
+
+Insplan.create(
+    [{:groupname=>"Cigna DPPO-Core In-Network", :annualmax=>1000, :deductible=>50}]
+)
+
+Benefit.create(
+    [
+        {:insplan_id=>Insplan.find_by(:groupname=>"Cigna DPPO-Core In-Network").id, :covcat_id=>Covcat.find_by(:description=>"Diagnostic").id, :percent=>100 },
+        {:insplan_id=>Insplan.find_by(:groupname=>"Cigna DPPO-Core In-Network").id, :covcat_id=>Covcat.find_by(:description=>"Diagnostic X-Ray").id, :percent=>100 },
+        {:insplan_id=>Insplan.find_by(:groupname=>"Cigna DPPO-Core In-Network").id, :covcat_id=>Covcat.find_by(:description=>"Routine Preventative").id, :percent=>100 },
+        {:insplan_id=>Insplan.find_by(:groupname=>"Cigna DPPO-Core In-Network").id, :covcat_id=>Covcat.find_by(:description=>"Restorative").id, :percent=>80 },
+        {:insplan_id=>Insplan.find_by(:groupname=>"Cigna DPPO-Core In-Network").id, :covcat_id=>Covcat.find_by(:description=>"Crowns").id, :percent=>50 }
+    ]
+)
