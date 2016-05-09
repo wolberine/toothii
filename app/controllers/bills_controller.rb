@@ -19,14 +19,15 @@ class BillsController < ApplicationController
     @total_payment = 0.to_f 
     @total_payment = @total_insurance_payment + @total_patient_payment + @total_deductible_payment
 
-    @google_bar_chart_data = [
-      ["Type of payment","Insurance Payment","Patient Payment","Deductible Payment"],
-      ["Payment Breakdown", @total_insurance_payment, @total_patient_payment, @total_deductible_payment]
+    @google_bar_chart_data = [@total_insurance_payment,@total_patient_payment,@total_deductible_payment]
+
+      #["Type of payment","Insurance Payment", { role: "annotation" },"Patient Payment", { role: "annotation" },"Deductible Payment", { role: "annotation" }],
+      #["Payment Breakdown", @total_insurance_payment,"hi" ,@total_patient_payment, "hi",@total_deductible_payment,"hi"]
       #["Type of payment", "Payment"],
       #["Insurance Payment", @total_insurance_payment],
       #["Patient Payment", @total_patient_payment],
       #["Deductible Payment", @total_deductible_payment]
-    ]
+    
 
 #so... this is confusing... patient payment is co-insurance, but need to add deductible to get everything the patient
 #actually pays

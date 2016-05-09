@@ -12,10 +12,13 @@
       google.charts.setOnLoadCallback(drawStackedVisualization);
       google.charts.setOnLoadCallback(drawWaterfallVisualization);
 
-
       function drawStackedVisualization() {
         // Some raw data (not necessarily accurate)
-        var data = google.visualization.arrayToDataTable(google_bar_chart_data);
+        var data = google.visualization.arrayToDataTable(
+          [["Type of Payment","Insurance", { role: "annotation" },"Co-Insurance", { role: "annotation" }, "Deductible", { role: "annotation" }],
+          ["",parseFloat(google_bar_chart_data[0]),"Insurance ".concat(google_bar_chart_data[0]),parseFloat(google_bar_chart_data[1]),"Co-Insurance",parseFloat(google_bar_chart_data[2]),"Deductible"]]
+
+          );
 
         var options = {
           seriesType: 'bars',
@@ -282,7 +285,7 @@
                   <div id="<%= transaction_chart_id %>" ></div>
                   <script type="text/javascript">
                     google.charts.setOnLoadCallback(function(){drawTransactionChart('<%= transaction_chart_id %>','<%= t.patient_payment %>','<%= t.insurance_payment %>')});
-                  </script>
+                  </script> 
                 </div>
               </div>
           </div>
