@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160509002610) do
+ActiveRecord::Schema.define(version: 20160509021739) do
 
   create_table "benefits", force: :cascade do |t|
     t.float    "monetaryamt"
@@ -27,6 +27,10 @@ ActiveRecord::Schema.define(version: 20160509002610) do
     t.integer  "patient_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "total_deductible_payment"
+    t.float    "total_insurance_payment"
+    t.float    "total_patient_payment"
+    t.float    "total_insurance_discount"
   end
 
   create_table "covcats", force: :cascade do |t|
