@@ -115,253 +115,129 @@
 
       }
     </script>
+
 <div class="page-header">
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-xs-4">
       &nbsp;
     </div>
-    <div class="col-md-4">
+    <div class="col-xs-4">
       &nbsp;
     </div>
-    <div class="col-md-2">
+    <div class="col-xs-2">
       <strong>
         <p class="text-left">
-          <%= @bill.date %>
+          <!--<%= @bill.date %>-->
         </p>
       </strong>
     </div>
-    <div class="col-md-2">
+    <div class="col-xs-2">
       <strong>
         <p class="text-right">
-            <%= Patient.find(@bill.patient_id).name %>
+            <!--<%= Patient.find(@bill.patient_id).name %>-->
         </p>
       </strong>
     </div>
   </div>
   <div class="row row-eq-height">
-    <div class= "col-md-4">
+    <div class= "col-xs-4">
       <h4>Elements<br>Dental Studio</h4>
     </div>
-    <div class= "col-md-4 section-background">
+    <div class= "col-xs-4 section-background">
       <h5>1605 Benson Ave. <br>Evanston, IL 60201</h5> 
     </div>
-    <div class= "col-md-4 elements-background">
+    <div class= "col-xs-4 elements-background">
       <h4><span class="elements-theme"><strong>Payment Due Today: <%= number_to_currency(@total_patient_payment+@total_deductible_payment, :unit => "$") %></strong></span></h4>
     </div>
   </div>
 </div>
 
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-xs-12">
     <h5>
-      <strong><%= Patient.find(@bill.patient_id).name %></strong>,<br>
+      <!--<strong><%= Patient.find(@bill.patient_id).name %></strong>,<br>-->
       Thanks for choosing <strong> Elements Dental Studio </strong> as your dental care provider!<br>
       Below is a summary of your charges today.
     </h5>
     
 
 
+
     <div class= "row">
-      <div class= "col-md-6">
+      <div class= "col-xs-6">
         <h4><span class="label label-default">Today's Charges</span></h4>
         <div id="stacked_chart_div" ></div>
       </div>
-      <div class= "col-md-6 section-background">
-        <h4><span class="label label-default">Payment History</span></h4>
+      <div class= "col-xs-6">
+        <h4><span class="label label-default">Treatment Today</span></h4>
+        <div class="section-background">
+          <h4><strong>What it was</strong></h4>
+          <h5><%= @bill.bill_note%></h5>
+          <h4><strong>Insurance codes</strong></h4>
+          <% @transactions.each do |t| %>
+            <h5><%= Procedure.find(t.procedure_id).description %></h5>
+          <% end %>
+          <h5><strong>Notes from Dr. Berman</strong></h5>
+        </div>
+
+        <!--<h4><span class="label label-default">Payment History</span></h4>
         <h5>Deductible Limit: <%= number_to_currency(Patient.find(@bill.patient_id).deductible_limit, :unit => '$') %></h5>
-        <div id="waterfall_chart_div" ></div>
+        <div id="waterfall_chart_div" ></div>-->
       </div>
     </div>
 
+
+    
 
     <div class= "row">
-      <div class= "col-md-6">
-        <h4><span class="label label-default">How you're doing</span></h4>
-        <div class="list-group">
-          <div class="list-group-item">
-            <div class= "row">
-              <div class="col-md-4">
-                <h5 class="list-group-item-heading">
-                  Tooth Color
-                </h5>
-              </div>
-              <div class="col-md-8">
-                <i class="fa fa-star-o fa-2x" aria-hidden="true">&nbsp;&nbsp;&nbsp;</i>
-                <i class="fa fa-star-o fa-2x" aria-hidden="true">&nbsp;&nbsp;&nbsp;</i>
-                <i class="fa fa-star-o fa-2x" aria-hidden="true">&nbsp;&nbsp;&nbsp;</i>
-                <i class="fa fa-star-o fa-2x" aria-hidden="true">&nbsp;&nbsp;&nbsp;</i>
-                <i class="fa fa-star-o fa-2x" aria-hidden="true"></i>
-              </div>
-            </div>
-            <div class= "row">
-              <div class="col-md-4">
-                <h5 class="list-group-item-heading">
-                  Gum Health
-                </h5>
-              </div>
-              <div class="col-md-8">
-                <i class="fa fa-star-o fa-2x" aria-hidden="true">&nbsp;&nbsp;&nbsp;</i>
-                <i class="fa fa-star-o fa-2x" aria-hidden="true">&nbsp;&nbsp;&nbsp;</i>
-                <i class="fa fa-star-o fa-2x" aria-hidden="true">&nbsp;&nbsp;&nbsp;</i>
-                <i class="fa fa-star-o fa-2x" aria-hidden="true">&nbsp;&nbsp;&nbsp;</i>
-                <i class="fa fa-star-o fa-2x" aria-hidden="true"></i>
-              </div>
-            </div>
-            <div class= "row">
-              <div class="col-md-4">
-                <h5 class="list-group-item-heading">
-                  Plaque Build-up
-                </h5>
-              </div>
-              <div class="col-md-8">
-                <i class="fa fa-star-o fa-2x" aria-hidden="true">&nbsp;&nbsp;&nbsp;</i>
-                <i class="fa fa-star-o fa-2x" aria-hidden="true">&nbsp;&nbsp;&nbsp;</i>
-                <i class="fa fa-star-o fa-2x" aria-hidden="true">&nbsp;&nbsp;&nbsp;</i>
-                <i class="fa fa-star-o fa-2x" aria-hidden="true">&nbsp;&nbsp;&nbsp;</i>
-                <i class="fa fa-star-o fa-2x" aria-hidden="true"></i>
-              </div>
-            </div>
-            <div class= "row">
-              <div class="col-md-4">
-                <h5 class="list-group-item-heading">
-                  More Comments
-                </h5>
-              </div>
-              <div class="col-md-8">
-                <div class="form-group">
-                  &nbsp;
-                </div>
-                <div class="form-group">
-                  &nbsp;
-                </div>
-              </div>
-            </div>
+        <div class= "col-xs-4">
+          <h4><span class="label label-default">Need More Help?</span></h4>
+          <div class="text-center">
+            <span class="fa-stack fa-5x">
+              <i class="fa fa-circle fa-stack-2x"></i>
+              <i class="fa fa-laptop fa-stack-1x fa-inverse"></i>
+            </span>
+            <h5>Online</h5>
+            <p>Visit our website @ <strong>www.elementsdentalstudio.com</strong></p>
           </div>
         </div>
-
-      </div>
-      <div class= "col-md-6">
-        <h4><span class="label label-default">Timeline</span></h4>
-        <ul class="fa-ul">
-          <% @transactions.each do |t| %>
-            <p><strong><%= t.date %></strong></p>
-            <li><i class="fa fa-calendar fa-lg fa-fw" aria-hidden="true"></i><%= Procedure.find(t.procedure_id).description %></li>
-            <hr>
-          <% end %>
-        </ul>
-      </div>
-    </div>
-
-    <div class= "row">
-      <div class= "col-md-6">
-        <h4><span class="label label-default">Charge Breakdown</span></h4>
-        <div class="list-group">
-          <% @transactions.each do |t| %>
-          <div class="list-group-item">
-              <div class="row">
-                <div class="col-md-2">
-                  &nbsp;
-                </div>
-                <div class="col-md-10">
-                  Date: <%= t.date %>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-2">
-                  <p class="list-group-item-text transaction-price"><%= number_to_currency(t.patient_payment + t.insurance_payment,:unit => "$") %></p>
-                </div>
-                <div class="col-md-6">
-                  <h4 class="list-group-item-heading"><%= Procedure.find(t.procedure_id).description %></h4>
-                  <h5 class="list-group-item-heading">What is it?</h4>
-                  <p class="list-group-item-text"><%= Procedure.find(t.procedure_id).long_description %></p>
-                </div>
-                <div class= "col-md-4">
-                  <% transaction_chart_id = 'transaction_chart' + t.id.to_s %>
-                  <% transaction_chart_package = Array.new
-                      transaction_chart_package.push(transaction_chart_id.to_s) 
-                      transaction_chart_package.push(t.patient_payment) 
-                      transaction_chart_package.push(t.insurance_payment) %>
-                  <% raw json_escape(transaction_chart_package.to_json) %>
-                  <div id="<%= transaction_chart_id %>" ></div>
-                  <script type="text/javascript">
-                    google.charts.setOnLoadCallback(function(){drawTransactionChart('<%= transaction_chart_id %>','<%= t.patient_payment %>','<%= t.insurance_payment %>')});
-                  </script> 
-                </div>
-              </div>
+        <div class= "col-xs-4">
+          <h4><span class="label">&nbsp;</span></h4>
+          <div class="text-center">
+            <span class="fa-stack fa-5x">
+              <i class="fa fa-circle fa-stack-2x"></i>
+              <i class="fa fa-mobile-phone fa-stack-1x fa-inverse"></i>
+            </span>
+            <h5>By phone</h5>
+            <p>Give us a call @ <strong>847-859-2617</strong></p>
           </div>
-          <% end %>
         </div>
+        <div class= "col-xs-4">
+          <h4><span class="label label-default">Leave a review</span></h4>
+          <div class="text-center">
+            <span class="fa-stack fa-5x">
+              <i class="fa fa-circle fa-stack-2x"></i>
+              <i class="fa fa-star-o fa-stack-1x fa-inverse"></i>
+            </span>
+            <h5>Thanks!</h5>
+            <p>Thanks again for choosing Elements Dental Studio. If you have time, we'd really appreciate your feedback and review at <strong>www.elementsdentalstudio.com/review</strong></p>
+          </div>
+        </div>
+    </div>
+
+    <div class="row section-background-green">
+      <div class="col-xs-12">
+        &nbsp;
       </div>
     </div>
 
-<h4><span class="label label-default">Insurance-at-a-Glance</span></h4>
-  <div class="row section-background">
-    <div class="col-md-6">
-      <h5><strong>Insurance Billing Codes</strong></h5>
-      <p>Insurance code 1</p>
-      <p>Insurance Code 2</p>
-    </div>
-    <div class="col-md-6">
-      <h5><strong>Deductible</strong></h5>
-      <p>
-        Your deductible is the maount you pay before 
-        insurance begins to cover any dental expenses. Before this
-        procedure, you had paid XXXXX of your deductible of YYYYY, leaving
-        ZZZZ left to pay.
-      </p>
-    </div>
-  </div>
-  <div class="row section-background">
-    <div class="col-md-6">
-      <h5><strong>Co-Insurance</strong></h5>
-      <p>
-        Your co-insurance is what you pay o the remaining balance after your deductible
-        is met. Your insurance pays GGGGG of this value.
-      </p>
-    </div>
-    <div class="col-md-6">
-      <h5><strong>Co-Insurance</strong></h5>
-      <p>
-        Your insurance amounts to FFFFFF, or HHHHHHH of the remaining balance after your deductible is met.
-      </p>
-    </div>
-  </div>
 
-
-<h4><span class="label label-default">Need Help?</span></h4>
-
-<div class= "row">
-    <div class= "col-md-4">
-      <div class="text-center">
-        <span class="fa-stack fa-5x">
-          <i class="fa fa-circle fa-stack-2x"></i>
-          <i class="fa fa-user fa-stack-1x fa-inverse"></i>
-        </span>
-        <h5>In-person</h5>
-        <p>Visit our office at 1605 Benson Ave, Evanston, IL 60201</p>
+    <div class="row">
+      <div class="col-xs-12">
+        &nbsp;
       </div>
     </div>
-    <div class= "col-md-4">
-      <div class="text-center">
-        <span class="fa-stack fa-5x">
-          <i class="fa fa-circle fa-stack-2x"></i>
-          <i class="fa fa-laptop fa-stack-1x fa-inverse"></i>
-        </span>
-        <h5>Online</h5>
-        <p>Ask questions online at www.elementsdentalstudio.com</p>
-      </div>
-    </div>
-    <div class= "col-md-4">
-      <div class="text-center">
-        <span class="fa-stack fa-5x">
-          <i class="fa fa-circle fa-stack-2x"></i>
-          <i class="fa fa-mobile-phone fa-stack-1x fa-inverse"></i>
-        </span>
-        <h5>By phone</h5>
-        <p>Call us anytime between 8AM-5PM, weekdays</p>
-      </div>
-    </div>
-</div>
+
 
 
     <div class="btn-group btn-group-justified">
